@@ -1,11 +1,11 @@
-import NavbarComponent from "@/components/navbar/NavbarComponent"
+import NavbarComponent from "@/components/navbar/NavbarComponent";
 
 const HomePage = () => {
   return (
     <div>
-      <NavbarComponent title='blogsphere'/>
+      <NavbarComponent title="blogsphere" />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
