@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./App.css";
-import HomePage from "@/pages/home/HomePage";
+import BlogPage from "./pages/blog/BlogPage";
 
 const App: React.FC = () => {
   return (
     <div>
-      <HomePage />
+      <BlogPage />
     </div>
   );
 };

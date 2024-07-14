@@ -36,6 +36,7 @@ export default function NavbarComponent(props: HeaderProps) {
                 alt="user photo"
               />
             </button>
+            <span className="font-semibold">Login</span>
             <div
               className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
               id="user-dropdown"
