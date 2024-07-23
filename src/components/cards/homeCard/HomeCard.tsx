@@ -16,7 +16,7 @@ const HomeCardComponent = () => {
       const currentHeight =
         target.documentElement.scrollTop + window.innerHeight;
       if (currentHeight + 1 >= scrollHeight) {
-        if (blogs) {
+        if (blogs?.next) {
           axios
             .get(blogs.next)
             .then(function (response) {
