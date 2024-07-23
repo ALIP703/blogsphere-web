@@ -5,4 +5,7 @@ export const PUBLIC_DATA_SERVICES = {
     getBlogs: async () => {
       return await axiosInstance.get('?limit=6')
     },
+    isAuth: async () => {
+      return await axiosInstance.get('auth')
+    },
   }
