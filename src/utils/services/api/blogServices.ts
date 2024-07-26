@@ -1,11 +1,13 @@
-// Make a request for a user with a given ID
 import axiosInstance from './api'
 
-export const PUBLIC_DATA_SERVICES = {
+export const BLOG_SERVICES = {
     getBlogs: async () => {
       return await axiosInstance.get('?limit=6')
     },
-    isAuth: async () => {
-      return await axiosInstance.get('auth')
+    uploadBlogFile: async (data:FormData) => {
+      return await axiosInstance.post('media/upload',data)
     },
+    createBlog:async(data:FormData)=>{
+      return await axiosInstance.post('create-blog',data)
+    }
   }
