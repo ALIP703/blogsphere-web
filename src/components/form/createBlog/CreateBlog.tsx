@@ -1,59 +1,73 @@
-import { useState } from "react";
-import "@blocknote/core/fonts/inter.css";
-import { useCreateBlockNote } from "@blocknote/react";
-import { BlockNoteView } from "@blocknote/mantine";
+import Select from "react-select";
 import "@blocknote/mantine/style.css";
+import "@blocknote/core/fonts/inter.css";
+import { BlockNoteView } from "@blocknote/mantine";
+import { CREATE_BLOG_HOOK_HELPERS } from "./Helper";
 
 const CreateBlogComponent = () => {
-  const [title, setTitle] = useState<string>("");
-  const [subtitle, setSubtitle] = useState<string>("");
-  const editor = useCreateBlockNote(); // Hook to create BlockNote editor instance
-
-  // Style for BlockNoteView component
-  const blockNoteViewStyle = {
-    // minWidth: '300px', // Example minimum width
-    minHeight: "400px", // Example minimum height
-    background: "white", // White background
-    border: "1px solid #e5e7eb", // Example border
-    borderRadius: "0.5rem", // Example border radius
-    padding: "1rem", // Example padding
-  };
+  const {
+    handleSubmit,
+    editor,
+    handleChangeFormData,
+    handleSelectChange,
+    handleContentChange,
+    selectedOptions,
+    options,
+    blockNoteViewStyle,
+    userData,
+  } = CREATE_BLOG_HOOK_HELPERS.useManageCreateBlogPage();
 
   return (
     <div>
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={handleSubmit}>
         <div className="grid gap-6 mb-6 md:grid-cols-2">
           <div>
             <input
               type="text"
-              id="first_name"
               className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Enter your title here..."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={userData.title}
+              name="title"
+              onChange={handleChangeFormData}
               required
             />
           </div>
           <div>
             <input
               type="text"
-              id="last_name"
+              name="subtitle"
               className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Enter your subtitle here..."
-              value={subtitle}
-              onChange={(e) => setSubtitle(e.target.value)}
+              value={userData.subtitle}
+              onChange={handleChangeFormData}
               required
             />
           </div>
         </div>
         <div style={blockNoteViewStyle}>
-          <BlockNoteView editor={editor} theme="light" />
+          <BlockNoteView
+            editor={editor}
+            theme="light"
+            onChange={handleContentChange} // Use the correct handler
+          />
+        </div>
+        <div>
+          <Select
+            options={options}
+            value={selectedOptions}
+            onChange={handleSelectChange}
+            isMulti={true}
+            placeholder="Select your hash tags.."
+          />
         </div>
         <div>
           <input
             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
             id="file_input"
+            name="thumbnail"
             type="file"
+            // value={userData.thumbnail}
+            onChange={handleChangeFormData}
           />
         </div>
         <button
