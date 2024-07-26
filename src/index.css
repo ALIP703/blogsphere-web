@@ -1,3 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+  }
+  input::-ms-reveal, /* To hide extra password reval icons in internet explorer */
+  input::-ms-clear {
+    display: none;
+  }
+  input[type=number]::-webkit-inner-spin-button, /* To hide spin on text filed */
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0; 
+    display:none;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: 'white'; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    /* background: rgb(96, 162, 255) ; */
+    background: rgba(29, 46, 56, 0.8);
+    border-radius: 15pt;
+  
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: grey ; 
+  }
+  
+  /* Hide the scrollbar corner */
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
+  
+  /* For Firefox */
+  scrollbar-corner {
+    display: none;
+  }
+  
