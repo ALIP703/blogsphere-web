@@ -25,3 +25,30 @@ export interface Blog {
     next: string;
     previous: string;
   }
+
+  
+export interface RegistrationUserData {
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
+
+
+// Define MultiSelect type
+export interface OptionType {
+  id: number;
+  value: string;
+  label: string;
+}
+export type UserData = {
+  title: string;
+  subtitle: string;
+  content: string; // contains HTML as a string
+  tags: number[]; // array of numbers
+  thumbnail: File | null;
+  // type: string; // new property
+};
