@@ -2,6 +2,9 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "@/utils/helpers/hook/ReduxHook";
 import { RootState } from "@/utils/helpers/auth/store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Import the close icon
+
 interface HeaderProps {
   title: string;
 }
@@ -10,7 +13,7 @@ export default function NavbarComponent(props: HeaderProps) {
   const { user } = useAppSelector((state: RootState) => state.auth);
   let { title } = props;
   title = title.toUpperCase();
-  
+
   return (
     <React.Fragment>
       <nav className="bg-white border-gray-200 border">
@@ -25,6 +28,9 @@ export default function NavbarComponent(props: HeaderProps) {
             </span>
           </Link>
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <Link to={"/create-blog"} className="mr-4 mt-1.5">
+              <FontAwesomeIcon icon={faPenToSquare} className=" w-5 h-5" />
+            </Link>
             {user.username == "" || null ? (
               <Link to={"/login"}>
                 <span className="font-semibold">Login</span>
