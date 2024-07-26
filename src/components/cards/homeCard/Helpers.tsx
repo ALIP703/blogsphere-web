@@ -1,6 +1,6 @@
 import React from "react";
 import { AxiosResponse } from "axios";
-import { PUBLIC_DATA_SERVICES } from "@/utils/services/api/blogServices";
+import { BLOG_SERVICES } from "@/utils/services/api/blogServices";
 import { HomeCardComponentInterface } from "@/utils/helpers/constants/interfaces";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ export const HOMEPAGE_HOOK_HELPERS = {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-      void PUBLIC_DATA_SERVICES.getBlogs()
+      void BLOG_SERVICES.getBlogs()
         .then((res: AxiosResponse) => {
           setBlogs(res.data.data);
         })
