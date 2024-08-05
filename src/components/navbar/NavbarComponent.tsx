@@ -4,12 +4,14 @@ import { useAppSelector } from "@/utils/helpers/hook/ReduxHook";
 import { RootState } from "@/utils/helpers/auth/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Import the close icon
+import DropDownProfileComponent from "../dropDownProfile/DropDownProfile";
 
 interface HeaderProps {
   title: string;
 }
 
 export default function NavbarComponent(props: HeaderProps) {
+  const [openProfileMenu, setOpenProfileMenu] = React.useState<boolean>(false);
   const { user } = useAppSelector((state: RootState) => state.auth);
   let { title } = props;
   title = title.toUpperCase();
@@ -44,6 +46,7 @@ export default function NavbarComponent(props: HeaderProps) {
                   aria-expanded="false"
                   data-dropdown-toggle="user-dropdown"
                   data-dropdown-placement="bottom"
+                  onClick={() => setOpenProfileMenu(!openProfileMenu)}
                 >
                   <span className="sr-only">Open user menu</span>
                   <img
@@ -52,53 +55,7 @@ export default function NavbarComponent(props: HeaderProps) {
                     alt="user photo"
                   />
                 </button>
-                <div
-                  className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
-                  id="user-dropdown"
-                >
-                  <div className="px-4 py-3">
-                    <span className="block text-sm text-gray-900">
-                      {user?.username}
-                    </span>
-                    <span className="block text-sm  text-gray-500 truncate">
-                      {user?.email}
-                    </span>
-                  </div>
-                  <ul className="py-2" aria-labelledby="user-menu-button">
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Dashboard
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Settings
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Earnings
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Sign out
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                {openProfileMenu && <DropDownProfileComponent openProfileMenu={openProfileMenu} setOpenProfileMenu={setOpenProfileMenu} />}
               </div>
             )}
             <button
