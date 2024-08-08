@@ -3,7 +3,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "@/pages/home/HomePage";
 import BlogPage from "@/pages/blog/BlogPage";
-import CreateBlog from "@/pages/blog/CreateBlog";
+import CreateBlogPage from "@/pages/blog/CreateBlogPage";
 import PAGES from "@/utils/helpers/constants/paths";
 import LoginPage from "@/pages/login/LoginPage";
 import NavbarComponent from "@/components/navbar/NavbarComponent";
@@ -51,7 +51,7 @@ const App: React.FC = () => {
               path={PAGES.CREATE_BLOG_PAGE}
               element={
                 <PrivetRoute>
-                  <CreateBlog />
+                  <CreateBlogPage />
                 </PrivetRoute>
               }
             />

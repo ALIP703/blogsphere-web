@@ -1,11 +1,11 @@
 import CreateBlogComponent from "@/components/form/createBlog/CreateBlog"
 
-const CreateBlog = () => {
+const CreateBlogPage = () => {
   return (
-    <div className="md:mx-32 my-10">
+    <div className="mx-auto max-w-screen-xl px-4 md:px-8 my-10">
       <CreateBlogComponent />
     </div>
   )
 }
 
-export default CreateBlog
+export default CreateBlogPage

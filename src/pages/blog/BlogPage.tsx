@@ -3,7 +3,7 @@ import RelatedBlogsComponent from "@/components/cards/relatedBlogs/RelatedBlogs"
 
 const BlogPage = () => {
   return (
-    <div className=" md:px-44">
+    <div className="max-w-screen-xl mx-auto">
         <BlogComponent />
         <RelatedBlogsComponent />
     </div>
