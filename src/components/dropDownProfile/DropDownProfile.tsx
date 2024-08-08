@@ -22,7 +22,7 @@ const DropDownProfileComponent: React.FC<DropDownProfileProps>  = ({ openProfile
   return (
     <div
       id="dropdown"
-      className="flex flex-col dropDownProfile z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
+      className="flex flex-col max-w-screen-xl dropDownProfile z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 mt-3"
     >
       <ul
         className="py-2 text-sm text-gray-700"

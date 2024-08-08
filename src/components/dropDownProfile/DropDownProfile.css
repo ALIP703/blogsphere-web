@@ -1,23 +1,24 @@
-.dropDownProfile{
+.dropDownProfile {
     position: absolute;
-    top:4.5rem;
-    right: 2.7rem;
+    top: 100%; /* Adjust if necessary */
+    right: 0; /* Aligns with the right edge of the button */
     width: 120px;
     padding: 15px;
     border-radius: 8px;
     background-color: white;
-    border: 1px solid gray;
-
+    border: 1px solid rgb(233, 232, 232);
+    z-index: 10;
 }
+
 .dropDownProfile::before{
     content: '';
     position: absolute;
-    top: -.7rem;
+    top: -.35rem;
     right: 1.1rem;
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     transform: rotate(45deg);
     background-color: white;
-    border-left: 1px solid gray;
-    border-top: 1px solid gray;
+    border-left: 1px solid rgb(233, 232, 232);
+    border-top: 1px solid rgb(233, 232, 232);
 }
