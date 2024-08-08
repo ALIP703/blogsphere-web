@@ -26,37 +26,21 @@ export const CREATE_BLOG_HOOK_HELPERS = {
   useManageCreateBlogPage: () => {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
-    const [selectedOptions, setSelectedOptions] = React.useState<
-      MultiValue<OptionType>
-    >([]);
-    const [options, setOptions] = React.useState<OptionType[]>();
-    const [userData, setUserData] = React.useState<UserData>({
-      title: "",
-      subtitle: "",
-      content: "",
-      tags: [],
-      thumbnail: null,
-    });
-
-    // Style for BlockNoteView component
-    const blockNoteViewStyle = {
-      minHeight: "400px", // Example minimum height
-      background: "white", // White background
-      border: "1px solid #e5e7eb", // Example border
-      borderRadius: "0.5rem", // Example border radius
-      padding: "1rem", // Example padding
-    };
-    
-    // handling content change
     const editor = useCreateBlockNote({
       initialContent: [
         {
-          type: "paragraph",
-          content: "Welcome to this demo!",
+          type: "heading",
+          content: "Title",
+          props: {
+            level: 2,
+          },
         },
         {
-          type: "paragraph",
+          type: "heading",
           content: "Upload an image using the button below",
+          props: {
+            level: 3,
+          },
         },
         {
           type: "image",
@@ -67,21 +51,46 @@ export const CREATE_BLOG_HOOK_HELPERS = {
       ],
       uploadFile,
     });
+    const [selectedOptions, setSelectedOptions] = React.useState<
+      MultiValue<OptionType>
+    >([]);
+    const [previewImage, setPreviewImage] = React.useState<string | undefined>(
+      undefined
+    );
+
+    const [options, setOptions] = React.useState<OptionType[]>();
+    const [userData, setUserData] = React.useState<UserData>({
+      content: JSON.stringify(editor.document),
+      tags: [],
+      thumbnail: null,
+    });
+
+    // Style for BlockNoteView component
+    const blockNoteViewStyle = {
+      minHeight: "400px", // Example minimum height
+      background: "white", // White background
+      border: "1px solid #e5e7eb", // Example border
+      borderRadius: "0.5rem", // Example border radius
+      // marginTop:'1rem'
+      paddingTop: "1rem", // Example padding
+    };
+
     // Define the content handler for BlockNoteView
     const handleContentChange = async () => {
       if (editor) {
         try {
           // Assuming editor.document.toJSON() returns the content in JSON format
-          const content = editor.document
+          const content = editor.document;
           const serializedContent = JSON.stringify(content); // Convert the object to a JSON string
           setUserData((prevState) => ({
             ...prevState,
             content: serializedContent, // Use the resolved JSON string content
           }));
-          console.log(userData);
-          
         } catch (error) {
-          console.error("Failed to convert blocks to markdown:", error);
+          const errorMessage = "Failed to convert blocks to markdown:";
+          enqueueSnackbar(errorMessage, {
+            variant: "error",
+          });
         }
       }
     };
@@ -101,12 +110,29 @@ export const CREATE_BLOG_HOOK_HELPERS = {
       const { name, value, type } = event.target;
 
       if (type === "file" && event.target instanceof HTMLInputElement) {
-        const file = event.target.files ? event.target.files[0] : null;
-        setUserData((prevState) => ({
-          ...prevState,
-          [name]: file,
-        }));
-      }  else {
+        const file = event.target.files?.[0];
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            if (typeof reader.result === "string") {
+              setPreviewImage(reader.result);
+            }
+          };
+          reader.onerror = () => {
+            console.error("There was an error reading the file.");
+          };
+          reader.readAsDataURL(file);
+
+          // Update the user data state with the file
+          setUserData((prevState) => ({
+            ...prevState,
+            [name]: file,
+          }));
+        } else {
+          console.warn("No file selected");
+        }
+      } else {
         // Handle other inputs (text, textarea, etc.)
         setUserData((prevState) => ({
           ...prevState,
@@ -117,10 +143,10 @@ export const CREATE_BLOG_HOOK_HELPERS = {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-  
-      // Create a new FormData instance
+
       const formData = new FormData();
-  
+      console.log(userData);
+
       // Append each field from userData to formData
       for (const key in userData) {
         if (Object.prototype.hasOwnProperty.call(userData, key)) {
@@ -134,12 +160,12 @@ export const CREATE_BLOG_HOOK_HELPERS = {
           }
         }
       }
-  
+
       // Make the API call using the FormData
       try {
         const res = await BLOG_SERVICES.createBlog(formData);
         console.log(res.data);
-  
+
         if (res?.data?.status === 201) {
           enqueueSnackbar("Blog created Successfully!", {
             variant: "success",
@@ -162,9 +188,9 @@ export const CREATE_BLOG_HOOK_HELPERS = {
     };
 
     React.useEffect(() => {
-      void PUBLIC_DATA_SERVICES.getTags().then((res)=>{
-        setOptions(res?.data?.data?.results)
-      })
+      void PUBLIC_DATA_SERVICES.getTags().then((res) => {
+        setOptions(res?.data?.data?.results);
+      });
       return () => {};
     }, []);
 
@@ -172,15 +198,16 @@ export const CREATE_BLOG_HOOK_HELPERS = {
 
     return {
       editor,
-      userData,
       options,
-      selectedOptions,
-      blockNoteViewStyle,
+      userData,
+      previewImage,
       handleSubmit,
-      handleChangeFormData,
-      handleContentChange,
+      selectedOptions,
       handleSelectChange,
       setSelectedOptions,
+      blockNoteViewStyle,
+      handleContentChange,
+      handleChangeFormData,
     };
   },
 };
